@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPEC Calculator</title>
+<style>
+  h2 {
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-decoration: underline;
+  }
+  #calculatorForm {
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  label {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    display: block;
+    margin-bottom: 5px;
+  }
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 15px; /* Increased margin for spacing */
+  }
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  #gstCategory {
+    text-align: center;
+  }
+  body {
+    border-style: double;
+  }
+</style>
+</head>
+<body>
+
+<h2>IPEC CALCULATOR</h2>
+
+<form id="calculatorForm">
+  <div>
+    <label for="organizationName">Organization Name:</label>
+    <br>
+    <input type="text" id="organizationName" name="organizationName">
+  </div>
+  
+  <div>
+    <label>Nature of Consultancy:</label>
+    <br>
+    <input type="radio" id="testing" name="consultancyNature" value="testing">
+    <label for="testing">Testing</label>
+    <br>
+    <input type="radio" id="trainer" name="consultancyNature" value="trainer">
+    <label for="trainer">Trainer</label>
+    <br>
+    <input type="radio" id="consultancy" name="consultancyNature" value="consultancy">
+    <label for="consultancy">Consultancy</label>
+    <br>
+  </div>
+  
+  <div>
+    <label for="amount">Amount:</label><br>
+    <input type="number" id="amount" name="amount">
+  </div>
+  
+  <div>
+    <label for="gstCategory">GST Category:</label>
+    <br>
+    <select id="gstCategory" name="gstCategory">
+      <option value="select option">--select option--</option>
+      <option value="5">5%</option>
+      <option value="12">12%</option>
+      <option value="18">18%</option>
+      <option value="28">28%</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="facultyNumber">Number of Faculty Involved:</label><br>
+    <input type="number" id="facultyNumber" name="facultyNumber">
+  </div>
+  
+  <div>
+    <label for="facultyRenumeration">Faculty Remuneration:</label>
+    <br>
+    <input type="number" id="facultyRenumeration" name="facultyRenumeration">
+  </div>
+  
+  <div>
+    <button type="button" onclick="calculateFees()">Calculate Fees</button>
+  </div>
+  
+  <div>
+    <br>
+    <label for="gstAmount">GST Amount:</label>
+    <br>
+    <input type="text" id="gstAmount" name="gstAmount" readonly>
+  </div>
+
+  <div>
+    <label for="facultyTotalRenumeration">Total Faculty Remuneration:</label>
+    <br>
+    <input type="text" id="facultyTotalRenumeration" name="facultyTotalRenumeration" readonly>
+  </div>
+  
+  <div>
+    <label for="ipecAmount">30% to Organization:</label>
+    <br>
+    <input type="text" id="ipecAmount" name="ipecAmount" readonly>
+  </div>
+
+  <div id="facultyDetails">
+    <!-- Faculty details will be displayed here -->
+  </div>
+
+  <div>
+    <label for="totalFees">Total Fees:</label>
+    <br>
+    <input type="text" id="totalFees" name="totalFees" readonly>
+  </div>
+</form>
+
+<script>
+function calculateFees() {
+  var amount = parseFloat(document.getElementById("amount").value);
+  var gstCategory = parseFloat(document.getElementById("gstCategory").value);
+  var facultyNumber = parseFloat(document.getElementById("facultyNumber").value);
+  var facultyRenumeration = parseFloat(document.getElementById("facultyRenumeration").value);
+  
+  var gstAmount = (amount * gstCategory) / 100;
+  var totalRenumeration = facultyRenumeration * facultyNumber;
+  var ipecAmount = totalRenumeration * 0.3;
+  var totalFees = gstAmount + totalRenumeration + ipecAmount;
+  
+  document.getElementById("gstAmount").value = gstAmount.toFixed(2);
+  document.getElementById("facultyTotalRenumeration").value = totalRenumeration.toFixed(2);
+  document.getElementById("ipecAmount").value = ipecAmount.toFixed(2);
+  document.getElementById("totalFees").value = totalFees.toFixed(2);
+
+  // Display faculty details
+  var facultyDetails = "<label>Faculty Allocation:</label><br>";
+  var facultyShare = totalRenumeration * 0.7;
+  for (var i = 1; i <= facultyNumber; i++) {
+    facultyDetails += "Faculty " + i + " share: ₹" + (facultyShare / facultyNumber).toFixed(2) + "<br>";
+  }
+  document.getElementById("facultyDetails").innerHTML = facultyDetails;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <style>
+        .form-control {
+            border: 1px solid #0a0a0a; 
+            margin-bottom: 10px;
+        }
+        .form-check {
+            padding-top: 8px; 
+        }
+        .form-check-input {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #007bff; 
+            background-color: #fff;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+        .form-check-input:checked {
+            background-color: #007bff;
+        }
+        h2{
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            text-align: center;
+            text-decoration: underline;
+            margin-bottom: 20px;
+        }
+        form{
+            background-color:whitesmoke;
+            max-width: 400px;
+            margin: 20px auto;
+            padding:20px;
+            border-radius: 8px;
+            box-shadow:0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+        .text-center{
+            text-align: center;
+        }
+        label{
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            margin-bottom: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center">USER REGISTRATION FORM</h2>
+    <form id="userForm" class="needs-validation" novalidate>
+        <table class="table">
+            <tr>
+                <th><label for="name">Name:</label></th>
+                <td><input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" pattern="[A-Za-z ]+" required title="Only letters and spaces are allowed"></td>
+            </tr>
+            <tr>
+                <th>Gender:</th>
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" name="gender" id="male" value="male" required>
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" name="gender" id="female" value="female" required>
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="language">Language Known:</label></th>
+                <td>
+                    <input type="checkbox" class="form-control" id="tamil" value="tamil">
+                    <label for="tamil">Tamil</label>
+                    <input type="checkbox" class="form-control" id="english" value="english">
+                    <label for="english">English</label>
+                    <input type="checkbox" class="form-control" id="hindi" value="hindi">
+                    <label for="hindi">Hindi</label>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="district">Select District:</label></th>
+                <td>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="erode" name="district[]" value="ERODE">
+                        <label class="form-check-label" for="erode">ERODE</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="coimbatore" name="district[]" value="COIMBATORE">
+                        <label class="form-check-label" for="coimbatore">COIMBATORE</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="chennai" name="district[]" value="CHENNAI">
+                        <label class="form-check-label" for="chennai">CHENNAI</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="salem" name="district[]" value="SALEM">
+                        <label class="form-check-label" for="salem">SALEM</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="email">Email:</label></th>
+                <td><input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required></td>
+            </tr>
+            <tr>
+                <th><label for="phone">Phone No:</label></th>
+                <td><input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" pattern="^\d{10}$" required title="Please enter a valid phone number with exactly 10 digits"></td>
+            </tr>
+            <tr>
+                <th><label for="username">Username:</label></th>
+                <td><input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" pattern="\w+" required title="Username must consist of letters, numbers, or underscores only"></td>
+            </tr>
+            <tr>
+                <th><label for="password">Password:</label></th>
+                <td><input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" minlength="8" required title="Password must be at least 8 characters long"></td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="address">Address:</label>
+                </td>
+                <td><textarea id="address" name="address" rows="4" cols="30"></textarea></td>
+            </tr>
+        </table>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+<script>
+    document.getElementById('userForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let formData = new FormData(this);
+        let name = formData.get('name');
+        let email = formData.get('email');
+        let phone = formData.get('phone');
+        let username = formData.get('username');
+        let password = formData.get('password');
+        let districts = formData.getAll('district[]');
+
+        let nameRegex = /^[A-Za-z ]+$/;
+        let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        let phoneRegex = /^\d{10}$/;
+        let usernameRegex = /^\w+$/;
+        let passwordRegex = /^.{8,}$/;
+
+        if (!nameRegex.test(name)) {
+            alert('Name must contain only letters and spaces.');
+            return;
+        }
+        if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+        if (!phoneRegex.test(phone)) {
+            alert('Phone number must contain exactly 10 digits.');
+            return;
+        }
+        if (!usernameRegex.test(username)) {
+            alert('Username must contain only letters, numbers, or underscores.');
+            return;
+        }
+        if (!passwordRegex.test(password)) {
+            alert('Password must be at least 8 characters long.');
+            return;
+        }
+        if (districts.length === 0) {
+            alert('Please select at least one district.');
+            return;
+        }
+
+        this.submit();
+    });
+</script>
+
+</body>
+</html>
